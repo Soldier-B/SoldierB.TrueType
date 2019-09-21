@@ -8,7 +8,6 @@ namespace SoldierB.TrueType
     {
         public FontReader(Stream input) : base(input) { }
         public FontReader(Stream input, Encoding encoding) : base(input, encoding) { }
-        public FontReader(Stream input, Encoding encoding, bool leaveOpen) : base(input, encoding, leaveOpen) { }
 
         public override ushort ReadUInt16()
         {

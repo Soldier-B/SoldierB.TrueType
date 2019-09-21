@@ -8,6 +8,8 @@ namespace SoldierB.TrueType
     public sealed class FontInformation
     {
         private const string HEADER_EXP = @"\x00\x01\x00\x00|OTTO";
+        private const ushort OFFSET_MACSTYLE = 44;
+        private const ushort OFFSET_FSSELECTION = 62;
 
         public enum FontStyle { Regular, Bold, Italic, BoldItalic }
         public enum Platform : ushort { Unicode, Macintosh, ISO, Windows, Custom }
@@ -93,44 +95,14 @@ namespace SoldierB.TrueType
                 }
 
                 // read macStyle
-                reader.BaseStream.Seek(headTableOffset + 44, SeekOrigin.Begin);
-                info.Style = ParseMacStyle(reader.ReadUInt16() & 0x3);
-                //switch (reader.ReadUInt16() & 3)
-                //{
-                //    case 0:
-                //        info.Style = FontStyle.Regular;
-                //        break;
-                //    case 1:
-                //        info.Style = FontStyle.Bold;
-                //        break;
-                //    case 2:
-                //        info.Style = FontStyle.Italic;
-                //        break;
-                //    case 3:
-                //        info.Style = FontStyle.BoldItalic;
-                //        break;
-                //}
+                reader.BaseStream.Seek(headTableOffset + OFFSET_MACSTYLE, SeekOrigin.Begin);
+                info.Style = ParseMacStyle(reader.ReadUInt16() & 0x3);                
 
                 // read fsSelection
                 if (os_2TableOffset > 0)
                 {
-                    reader.BaseStream.Seek(os_2TableOffset + 62, SeekOrigin.Begin);
-                    info.Style = ParseFsSelection(reader.ReadUInt16() & 0x61);
-                    //switch (reader.ReadUInt16() & 97)
-                    //{
-                    //    case 1:
-                    //        info.Style = FontStyle.Italic;
-                    //        break;
-                    //    case 32:
-                    //        info.Style = FontStyle.Bold;
-                    //        break;
-                    //    case 33:
-                    //        info.Style = FontStyle.BoldItalic;
-                    //        break;
-                    //    default:
-                    //        info.Style = FontStyle.Regular;
-                    //        break;
-                    //}
+                    reader.BaseStream.Seek(os_2TableOffset + OFFSET_FSSELECTION, SeekOrigin.Begin);
+                    info.Style = ParseFsSelection(reader.ReadUInt16() & 0x61);                    
                 }
             }
 
