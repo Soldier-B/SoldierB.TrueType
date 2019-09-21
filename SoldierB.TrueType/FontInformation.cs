@@ -7,12 +7,13 @@ namespace SoldierB.TrueType
 {
     public sealed class FontInformation
     {
+        // ttf/otf "magic number" regex
         private const string HEADER_EXP = @"\x00\x01\x00\x00|OTTO";
+        // respective "style" offsets
         private const ushort OFFSET_MACSTYLE = 44;
         private const ushort OFFSET_FSSELECTION = 62;
 
         public enum FontStyle { Regular, Bold, Italic, BoldItalic }
-        public enum Platform : ushort { Unicode, Macintosh, ISO, Windows, Custom }
 
         public string FamilyName { get; set; }
         public FontStyle Style { get; set; }
@@ -80,7 +81,7 @@ namespace SoldierB.TrueType
                     ushort length = reader.ReadUInt16();
                     ushort offset = reader.ReadUInt16();
 
-                    if (nameId == 1)
+                    if (nameId == (ushort)Name.FontFamilyName)
                     {
                         long position = reader.BaseStream.Position;
                         bool isWindows = platformId == (ushort)Platform.Windows;
@@ -96,13 +97,13 @@ namespace SoldierB.TrueType
 
                 // read macStyle
                 reader.BaseStream.Seek(headTableOffset + OFFSET_MACSTYLE, SeekOrigin.Begin);
-                info.Style = ParseMacStyle(reader.ReadUInt16() & 0x3);                
+                info.Style = ParseMacStyle(reader.ReadUInt16() & 0x3);
 
                 // read fsSelection
                 if (os_2TableOffset > 0)
                 {
                     reader.BaseStream.Seek(os_2TableOffset + OFFSET_FSSELECTION, SeekOrigin.Begin);
-                    info.Style = ParseFsSelection(reader.ReadUInt16() & 0x61);                    
+                    info.Style = ParseFsSelection(reader.ReadUInt16() & 0x61);
                 }
             }
 

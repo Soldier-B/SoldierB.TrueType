@@ -1,0 +1,32 @@
+﻿namespace SoldierB.TrueType
+{
+    public enum Name : ushort
+    {
+        Copyright,
+        FontFamilyName,
+        FontSubFamilyName,
+        UniqueFontId,
+        FullFontName,
+        Version,
+        PostScriptName,
+        Trademark,
+        Manufacturer,
+        Designer,
+        Description,
+        VendorUrl,
+        DesignerUrl,
+        LicenseDescription,
+        LicenseInfoUrl,
+        Reserved,
+        TypographicFamilyName,
+        TypographicSubFamilyName,
+        CompatibleFullName,
+        SampleText,
+        PostScriptCid,
+        WwsFamilyName,
+        WwsSubFamilyName,
+        LightBackgroundPalette,
+        DarkBackgroundPalette,
+        VariationsPostScriptNamePrefix
+    }
+}

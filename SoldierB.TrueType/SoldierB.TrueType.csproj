@@ -44,6 +44,8 @@
     <Compile Include="FontInformation.cs" />
     <Compile Include="FontReader.cs" />
     <Compile Include="InvalidFontException.cs" />
+    <Compile Include="Name.cs" />
+    <Compile Include="Platform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
